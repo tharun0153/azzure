@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Overview Presentation</title>
+    <style>
+        :root {
+            --azure-blue: #0078d4;
+            --white: #ffffff;
+            --gray: #f2f2f2;
+            --text: #323130;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--gray);
+            overflow: hidden; /* Prevent scrolling, use slides instead */
+        }
+
+        /* Slide Container */
+        .deck-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            transform: translateX(100px);
+            pointer-events: none;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        /* Slide Themes */
+        .title-slide { background: linear-gradient(135deg, #001f3f, #0078d4); color: white; }
+        .content-slide { background: var(--white); color: var(--text); }
+
+        /* Typography */
+        h1 { font-size: 4rem; margin-bottom: 10px; }
+        h2 { font-size: 3rem; color: var(--azure-blue); }
+        p { font-size: 1.5rem; max-width: 800px; line-height: 1.6; }
+        
+        .feature-list {
+            text-align: left;
+            font-size: 1.3rem;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            transition: 0.3s;
+        }
+
+        button:hover { background: var(--azure-blue); }
+
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 8px;
+            background: var(--azure-blue);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+<div class="deck-container">
+    <div class="progress-bar" id="progress"></div>
+
+    <div class="slide title-slide active">
+        <h1>Microsoft Azure</h1>
+        <p>Your guide to the world's most capable cloud platform.</p>
+        <p style="font-size: 1rem; margin-top: 50px;">Use Arrows or Buttons to Navigate</p>
+    </div>
+
+    <div class="slide content-slide">
+        <h2>What is Azure?</h2>
+        <p>Azure is a cloud computing platform with over 200 products and services. It replaces physical servers with digital, scalable power.</p>
+        <div class="feature-list">
+            <li>✅ <b>No Hardware:</b> Stop buying physical servers.</li>
+            <li>✅ <b>Global:</b> Data centers in 60+ regions.</li>
+            <li>✅ <b>Flexible:</b> Pay only for what you use.</li>
+        </div>
+    </div>
+
+    <div class="slide content-slide" style="background: #f0f7ff;">
+        <h2>Agentic AI & OpenAI</h2>
+        <p>Azure is the exclusive home of the world's most advanced AI models.</p>
+        <div class="feature-list">
+            <li>🤖 <b>Azure OpenAI:</b> Deploy GPT-4o in your own environment.</li>
+            <li>🧠 <b>Cognitive Services:</b> Vision, Speech, and Language APIs.</li>
+            <li>🛠️ <b>AI Studio:</b> Build custom AI agents for your business.</li>
+        </div>
+    </div>
+
+    <div class="slide content-slide">
+        <h2>Compute Power</h2>
+        <p>Run everything from a tiny personal blog to a massive enterprise bank.</p>
+        <div class="feature-list">
+            <li>💻 <b>Virtual Machines:</b> Full control over OS and hardware.</li>
+            <li>🚀 <b>App Services:</b> Fast web hosting for Devs.</li>
+            <li>⚡ <b>Azure Functions:</b> Code that runs only when triggered.</li>
+        </div>
+    </div>
+
+    <div class="slide title-slide">
+        <h2>Ready to Scale?</h2>
+        <p>Azure helps you reduce costs, innovate faster, and keep your data secure with Microsoft's billion-dollar security investment.</p>
+        <button onclick="location.reload()" style="background: white; color: var(--azure-blue); margin-top: 20px;">Start Over</button>
+    </div>
+</div>
+
+<div class="controls">
+    <button id="prevBtn">← Previous</button>
+    <button id="nextBtn">Next →</button>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const progress = document.getElementById('progress');
+    let currentSlide = 0;
+
+    function updateSlides() {
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentSlide);
+        });
+        
+        // Update Progress Bar
+        const percent = ((currentSlide + 1) / slides.length) * 100;
+        progress.style.width = percent + '%';
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+        if (currentSlide < slides.length - 1) {
+            currentSlide++;
+            updateSlides();
+        }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateSlides();
+        }
+    });
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "ArrowRight") document.getElementById('nextBtn').click();
+        if (e.key === "ArrowLeft") document.getElementById('prevBtn').click();
+    });
+</script>
+
+</body>
+</html>

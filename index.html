@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Azure Explorer PPT</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            overflow: hidden;
+        }
+
+        #intro-screen {
+            background-color: #0078d4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            text-align: center;
+            transition: opacity 0.5s ease;
+        }
+
+        h1 { font-size: 3.5rem; margin-bottom: 10px; }
+        p { font-size: 1.2rem; opacity: 0.9; }
+
+        .btn {
+            background: #ffb900;
+            color: black;
+            padding: 20px 45px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+
+        .btn:hover { background: white; transform: scale(1.05); }
+
+        #file-loader {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="intro-screen">
+    <h1>Microsoft Azure</h1>
+    <p>Ready to see what the cloud can do?</p>
+    <button class="btn" onclick="openAnotherFile()">EXPLORE AZURE NOW</button>
+</div>
+
+<iframe id="file-loader" src=""></iframe>
+
+<script>
+    function openAnotherFile() {
+        // 1. Hide the intro screen
+        document.getElementById('intro-screen').style.display = 'none';
+        
+        // 2. Set the iframe to load the file
+        const filePath = "/home/dslab23/Documents/indexx.html"; // full path
+        const loader = document.getElementById('file-loader');
+        loader.src = filePath;
+        loader.style.display = 'block';
+
+        // 3. Copy the file path to clipboard
+        navigator.clipboard.writeText(filePath).then(() => {
+            alert("File path copied to clipboard:\n" + filePath);
+        }).catch(err => {
+            console.error('Failed to copy file path: ', err);
+        });
+    }
+</script>
+
+</body>
+</html>
